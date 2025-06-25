@@ -26,9 +26,9 @@ public:
     tft = tftp;
     tft->init();
     tft->setRotation(1);
-    tft->fillScreen(TFT_DARKGREY);
+    tft->fillScreen(TFT_BLACK);
     tft->setTextFont(1);
-    tft->setTextColor(TFT_GREEN, TFT_BLACK);
+    tft->setTextColor(TFT_RED, TFT_BLACK);
   }
 
   void status(char *status) {
@@ -88,7 +88,7 @@ public:
 void setup() {
   Serial.begin(115200);
 
-  BLEDevice::init("ESP32 Passkey");
+  BLEDevice::init("Av00p");
   BLEServer *pServer = BLEDevice::createServer();
   BLEService *pService = pServer->createService("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
   BLECharacteristic *pCharacteristic = pService->createCharacteristic(
@@ -111,6 +111,7 @@ void setup() {
   pSecurity->setStaticPIN(123456);  // Set a 6-digit passkey here
   lcd = new Lcd(&tft);
   BLEDevice::setSecurityCallbacks(new MySecurity(lcd));
+  lcd->status("Initializing");
 }
 
 void loop() {
